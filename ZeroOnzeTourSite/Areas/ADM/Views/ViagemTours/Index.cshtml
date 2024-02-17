@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ZeroOnzeTour.Models.ViagemTour>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-info">Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tutilo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataViagem)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tutilo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataViagem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ativo)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.Id">Editar</a>
+                    <a class="btn btn-warning" asp-area="" asp-controller="ImagensTours" asp-action="Index" asp-route-id="@item.Id">Imagens</a>
+                    <a asp-action="Delete" class="btn btn-dark" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

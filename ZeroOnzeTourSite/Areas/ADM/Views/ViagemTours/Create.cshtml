@@ -1,0 +1,157 @@
+﻿@model ZeroOnzeTour.Models.ViagemTour
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Viagem Tour</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tutilo" class="control-label"></label>
+                <input asp-for="Tutilo" class="form-control" />
+                <span asp-validation-for="Tutilo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubTitulo" class="control-label"></label>
+                <input asp-for="SubTitulo" class="form-control" />
+                <span asp-validation-for="SubTitulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Incluso" class="control-label"></label>
+                <textarea asp-for="Incluso" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Incluso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NaoIncluso" class="control-label"></label>
+                <textarea asp-for="NaoIncluso" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="NaoIncluso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FraseFinal" class="control-label"></label>
+                <input asp-for="FraseFinal" class="form-control" />
+                <span asp-validation-for="FraseFinal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Destaque" class="control-label"></label>
+                <input asp-for="Destaque" class="form-control" />
+                <span asp-validation-for="Destaque" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ordem" class="control-label"></label>
+                <input asp-for="Ordem" type="number" class="form-control" />
+                <span asp-validation-for="Ordem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FraseDestaque" class="control-label"></label>
+                <textarea asp-for="FraseDestaque" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="FraseDestaque" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pais" class="control-label"></label>
+                <input asp-for="Pais" class="form-control" />
+                <span asp-validation-for="Pais" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cidade" class="control-label"></label>
+                <input asp-for="Cidade" class="form-control" />
+                <span asp-validation-for="Cidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataViagem" class="control-label"></label>
+                <input asp-for="DataViagem" class="form-control" />
+                <span asp-validation-for="DataViagem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" class="form-control" onKeyPress="return(moeda(this,'.',',',event))" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <textarea asp-for="Descricao" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ObsInvestimento" class="control-label"></label>
+                <textarea asp-for="ObsInvestimento" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="ObsInvestimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorPrincipal" class="control-label"></label>
+                <input asp-for="ValorPrincipal" class="form-control" onKeyPress="return(moeda(this,'.',',',event))" />
+                <span asp-validation-for="ValorPrincipal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescricaoRoteiro" class="control-label"></label>
+                <textarea asp-for="DescricaoRoteiro" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="DescricaoRoteiro" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+                </label>
+            </div>
+            <div class="form-group" style="text-align: right;">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-light">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script language="javascript">
+    function getMoney(str) {
+        return parseInt(str.replace(/[\D]+/g, ''));
+    }
+    function moeda(a, e, r, t) {
+        let n = ""
+            , h = j = 0
+            , u = tamanho2 = 0
+            , l = ajd2 = ""
+            , o = window.Event ? t.which : t.keyCode;
+        if (13 == o || 8 == o)
+            return !0;
+        if (n = String.fromCharCode(o),
+            -1 == "0123456789".indexOf(n))
+            return !1;
+        for (u = a.value.length,
+            h = 0; h < u && ("0" == a.value.charAt(h) || a.value.charAt(h) == r); h++)
+            ;
+        for (l = ""; h < u; h++)
+            -1 != "0123456789".indexOf(a.value.charAt(h)) && (l += a.value.charAt(h));
+        if (l += n,
+            0 == (u = l.length) && (a.value = ""),
+            1 == u && (a.value = "0" + r + "0" + l),
+            2 == u && (a.value = "0" + r + l),
+            u > 2) {
+            for (ajd2 = "",
+                j = 0,
+                h = u - 3; h >= 0; h--)
+                3 == j && (ajd2 += e,
+                    j = 0),
+                    ajd2 += l.charAt(h),
+                    j++;
+            for (a.value = "",
+                tamanho2 = ajd2.length,
+                h = tamanho2 - 1; h >= 0; h--)
+                a.value += ajd2.charAt(h);
+            a.value += r + l.substr(u - 2, u)
+        }
+        return !1
+    }
+</script>
