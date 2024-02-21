@@ -234,17 +234,31 @@ namespace ZeroOnzeTourSite.Controllers
         {
             try
             {
-            var imagensTour = await _context.ImagensTour.FindAsync(id);
-            _context.ImagensTour.Remove(imagensTour);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "ViagemTours");
+                var imagensTour = await _context.ImagensTour.FindAsync(id);
+
+                // Obtém o caminho completo do arquivo
+                var caminhoCompleto = Path.Combine(_filePath, "fotos", imagensTour.Nome); // Assumindo que o nome do arquivo está armazenado no campo Nome
+
+                // Remove o registro do banco de dados
+                _context.ImagensTour.Remove(imagensTour);
+                await _context.SaveChangesAsync();
+
+                // Exclui o arquivo físico
+                if (System.IO.File.Exists(caminhoCompleto))
+                {
+                    System.IO.File.Delete(caminhoCompleto);
+                }
+
+                return RedirectToAction("Index", "ViagemTours");
             }
             catch (Exception ex)
             {
-
+                // Lidar com a exceção conforme necessário
+                Console.WriteLine($"Erro ao excluir imagem: {ex.Message}");
                 throw;
             }
         }
+
 
         private bool ImagensTourExists(int id)
         {
