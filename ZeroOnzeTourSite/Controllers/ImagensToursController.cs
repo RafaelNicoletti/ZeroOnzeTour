@@ -101,7 +101,7 @@ namespace ZeroOnzeTourSite.Controllers
                 if (!ValidaImagem(anexo))
                     return BadRequest(ModelState);
 
-                var nome = SalvarAquivo(anexo);
+                var nome = await SalvarArquivo(anexo);
                 if (nome != null)
                 {
                     imagensTour.Foto = nome;
@@ -115,30 +115,36 @@ namespace ZeroOnzeTourSite.Controllers
             return View(imagensTour);
         }
 
-        private string SalvarAquivo(IFormFile arquivoImagem)
+        private async Task<string> SalvarArquivo(IFormFile arquivoImagem)
         {
             try
             {
+                var extensao = Path.GetExtension(arquivoImagem.FileName);
+                var nome = Guid.NewGuid().ToString() + extensao;
 
+                var filePath = Path.Combine(_filePath, "fotos");
 
-                var nome = Guid.NewGuid().ToString() + arquivoImagem.FileName;
-                var filePath = _filePath + "\\fotos";
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
                 }
-                using (var stream = System.IO.File.Create(filePath + "\\" + nome))
+
+                var caminhoCompleto = Path.Combine(filePath, nome);
+
+                using (var stream = System.IO.File.Create(caminhoCompleto))
                 {
-                    arquivoImagem.CopyToAsync(stream);
+                    await arquivoImagem.CopyToAsync(stream);
                 }
+
                 return nome;
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine($"Erro ao salvar o arquivo: {ex.Message}");
                 throw;
             }
         }
+
 
         private bool ValidaImagem(IFormFile arquivoImagem)
         {
