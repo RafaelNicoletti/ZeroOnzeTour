@@ -35,7 +35,7 @@ namespace ZeroOnzeTourSite.Controllers
                 {
                     return RedirectToAction("Create", new { id = id });
                 }
-
+                ViewBag.IdViagem = id;
                 return View(imagensTour);
             }
             catch (Exception ex)
@@ -45,21 +45,7 @@ namespace ZeroOnzeTourSite.Controllers
             }
 
         }
-        //private string ProcessaUploadedFile(ImagensTour model)
-        //{
-        //    string nomeArquivoImagem = null;
-        //    if (model.PalestranteFoto != null)
-        //    {
-        //        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads");
-        //        nomeArquivoImagem = Guid.NewGuid().ToString() + "_" + model.PalestranteFoto.FileName;
-        //        string filePath = Path.Combine(uploadsFolder, nomeArquivoImagem);
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            model.PalestranteFoto.CopyTo(fileStream);
-        //        }
-        //    }
-        //    return nomeArquivoImagem;
-        //}
+
 
         // GET: ImagensTour/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -70,12 +56,14 @@ namespace ZeroOnzeTourSite.Controllers
             }
 
             var imagensTour = await _context.ImagensTour
-                .FirstOrDefaultAsync(m => m.Id == id);
+                               .FirstOrDefaultAsync(m => m.Id == id);
+
             if (imagensTour == null)
             {
                 return NotFound();
             }
 
+            ViewBag.IdViagem = id;
             return View(imagensTour);
         }
 
@@ -244,10 +232,18 @@ namespace ZeroOnzeTourSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            try
+            {
             var imagensTour = await _context.ImagensTour.FindAsync(id);
             _context.ImagensTour.Remove(imagensTour);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "ViagemTours");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         private bool ImagensTourExists(int id)

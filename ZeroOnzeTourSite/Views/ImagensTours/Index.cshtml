@@ -6,7 +6,7 @@
 <h1>Lista de imagens</h1>
 
 <p>
-    <a asp-action="Create">Novo</a>
+    <a asp-action="Create" class="btn btn-primary" asp-route-id="@ViewBag.IdViagem">Novo</a>
 </p>
 <table class="table">
     <thead>
@@ -50,7 +50,7 @@
                 </td>
                 <td>
                     <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.Id">Editar</a>
-                    <a class="btn btn-warning" asp-area="" asp-controller="ImagensTour" asp-action="Index" asp-route-id="@item.Id">Imagens</a>
+                  @*  <a class="btn btn-warning" asp-area="" asp-controller="ImagensTour" asp-action="Index" asp-route-id="@item.Id">Imagens</a>*@
                     <a asp-action="Delete" class="btn btn-dark" asp-route-id="@item.Id">Excluir</a>
                 </td>
             </tr>
